@@ -1699,24 +1699,6 @@ def renderizar_aviso_conferencia_awb(conferencia_awb: Dict[str, object]) -> None
         if isinstance(df_faltantes, pd.DataFrame) and not df_faltantes.empty:
             with st.expander(f"Ver AWBs não encontradas no Excel ({total_faltantes})", expanded=True):
                 st.dataframe(df_faltantes, use_container_width=True, hide_index=True, height=min(300, 80 + (35 * total_faltantes)))
-    else:
-        st.markdown(
-            f"""
-            <div style="background:#ecfdf5;border:1px solid #bbf7d0;border-left:8px solid #16a34a;border-radius:18px;padding:16px 20px;margin:0 0 22px 0;box-shadow:0 8px 20px rgba(15,23,42,0.05);">
-                <div style="font-size:20px;font-weight:900;color:#166534;margin-bottom:8px;">🟢 CONFERÊNCIA DE DADOS OK</div>
-                <div style="font-size:15px;color:#14532d;line-height:1.7;">
-                    <b>AWBs no PDF:</b> {total_pdf}<br>
-                    <b>AWBs do PDF encontradas no Excel:</b> {total_excel_encontradas}<br>
-                    <b>AWBs não encontradas no Excel:</b> 0
-                </div>
-                <div style="margin-top:8px;font-size:14px;color:#14532d;">
-                    ✅ Todas as AWBs dos PDFs foram localizadas no Excel carregado.
-                </div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-
 
 def filtrar_pedidos_pagos_excel(df: pd.DataFrame, status_entregue: List[str], status_ocorrencia: List[str]) -> pd.DataFrame:
     """
@@ -4509,21 +4491,6 @@ else:
             mime="application/pdf",
             use_container_width=True,
         )
-
-st.markdown("---")
-
-g1, g2 = st.columns(2)
-with g1:
-    fig = px.bar(df_dia_view, x="Data Rota", y="Total_Dia", color="Motorista Final", text="Total_Dia")
-    fig.update_traces(texttemplate="R$ %{text:.2f}", textposition="outside")
-    fig.update_layout(height=420, xaxis_title="", yaxis_title="Total dia")
-    st.plotly_chart(fig, use_container_width=True)
-
-with g2:
-    por_motorista = df_dia_view.groupby("Motorista Final", as_index=False)["Total_Dia"].sum()
-    fig2 = px.pie(por_motorista, names="Motorista Final", values="Total_Dia", hole=0.55)
-    fig2.update_layout(height=420)
-    st.plotly_chart(fig2, use_container_width=True)
 
 st.markdown("---")
 st.markdown('<div class="section-heading">Entregas consideradas para pagamento</div>', unsafe_allow_html=True)
