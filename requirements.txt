@@ -1,8 +1,10 @@
 streamlit
 pandas
 openpyxl
-PyPDF2
+numpy
 plotly
+pdfplumber
+PyPDF2
+PyMuPDF
+XlsxWriter
 requests
-pymupdf
-reportlab
